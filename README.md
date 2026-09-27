@@ -1,62 +1,16 @@
+	# Multi-Router Automation & Orchestration Engine
 
-# Multi-Router Path Convergence Automation Engine
+https://github.com/ignacio0821/multi-router-automation
 
-Active CI Pipeline Status: [![NetDevOps Core CI Pipeline](https://github.com)](https://github.com)
+## 📌 Overview
+A production-grade network orchestration engine designed to programmatically provision multi-node network architectures, manage dynamic host environments, handle RESTful integrations, and execute automated state validation over an enterprise CML lab fabric.
 
-An enterprise NetDevOps automation infrastructure designed to programmatically manage, audit, and validate multi-path routing policies across a 5-node network topology using RESTCONF, YANG data models, and NAPALM.
+## 📂 Repository Architecture
+* **01_Core_Orchestration_Engines/** - Concurrent execution loops, multi-threaded connection engines, and parallel configuration deployment blocks.
+* **02_Inventory_Data_Models/** - Abstraction parameters, yaml/json device variable maps, and structured host definitions.
+* **03_Verification_Telemetry/** - Automated compliance verification checks, state differences parsing, and regular expression log scrapers.
+* **04_API_Integrations_SSoT/** - Single Source of Truth API orchestration tools, webhook payload handlers, and external database sync pipelines.
+* **05_Logging_Error_Remediation/** - Dynamic failure simulation scripting, closed-loop diagnostic tools, and automated fault recovery playbooks.
 
-## 🏛️ Core Architectural Convergence Logic (Gates 0-4)
-
-The infrastructure enforces path selection and dynamic failover by leveraging the strict linear evaluation order of the Cisco IOS XE routing engine:
-
-```text
-  [Inbound Packet]
-         |
-         v
-  +-----------------------+
-
-  |  Gate 0: Prefix Match | --> Is prefix length an exact match?
-  +-----------------------+     (e.g., /24 vs /24) -> YES: Move to Gate 1.
-         |
-         v
-  +-----------------------+
-
-  | Gate 1: Admin Dist   | --> Primary: Static Route via Center Corridor (AD = 1)
-  +-----------------------+     Backup: OSPF Dynamic Learning via Outer Ring (AD = 110)
-         |                      Static Route (AD 1) wins; traffic binds to R1 -> R3 -> R5.
-         v
-  +-----------------------+
-
-  | Gate 2 & 3: Failure   | --> CRITICAL FAILURE: Center link drops.
-  +-----------------------+     Static Route interface drops. Prefix is purged from RIB.
-         |                      Re-evaluation: Only the OSPF route (AD 110) remains.
-         v
-  +-----------------------+
-
-  | Gate 4: Convergence   | --> Result: Traffic swings automatically to Outer Ring (R2/R4).
-  +-----------------------+     Zero manual intervention required.
-```
-
-## 🛠️ Repository File Structure
-
-```text
-├── .github/workflows/
-│   └── netdevops-ci.yaml     # GitHub Actions continuous integration pipeline
-├── data/
-│   └── network_inventory.yaml # Structured node data bindings & schema variables
-├── scripts/
-│   ├── deploy_configs.py     # RESTCONF payload enforcement engine
-│   ├── backup_routes.py      # NAPALM state verification & routing table snapshots
-│   └── deploy_base.py        # NAPALM golden configuration standard implementation
-├── tests/
-│   └── test_topology.py      # Pytest validation test definitions
-├── .env.example              # Environment variables template for security masking
-├── .gitignore                # Production file exclusion filter rules
-├── pyproject.toml            # Black linter & code style configurations
-└── requirements.txt          # Python production application dependencies
-```
-
-## 🔒 Security & Credential Management
-This repository implements strict environment separation guidelines. Plaintext credentials are explicitly barred from the source tracking trees. System authorization relies on local environment bindings:
-- `NET_DEV_USER`: Production/Sandbox administrative username string.
-- `NET_DEV_PASS`: Production/Sandbox cryptographic password payload.
+## 🛠️ Automated CI/CD
+This repository utilizes a localized **GitHub Actions CI/CD Pipeline** to enforce strict code formatting and PEP 8 compliance checks across all automation modules using Black.
