@@ -1,0 +1,22 @@
+#!/bin/sh
+echo "======================================================================"
+echo "[HOOK] Initiating pre-commit programmatic verification engine..."
+echo "======================================================================"
+
+# Modular Validation: Target your exact core Python entry point.
+# (Update the string below if your main orchestration launcher sits elsewhere)
+python "01_Core_Orchestration_Engines/orchestrator.py"
+
+if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ [CRITICAL FAILURE] Verification layer exited non-zero."
+    echo "🛑 Commit blocked. Fix configuration engine scripts before staging."
+    echo "======================================================================"
+    exit 1
+fi
+
+echo ""
+echo "✅ [SUCCESS] Local validation layers cleared safely."
+echo "🚀 Proceeding with Git commit creation."
+echo "======================================================================"
+exit 0
